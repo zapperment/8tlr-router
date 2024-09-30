@@ -1,6 +1,6 @@
 const config = {
   "!(*.ts)": "prettier --write",
-  "*.ts": ["prettier --write", "eslint --fix", "tsc --noEmit"],
+  "*.ts": ["eslint --fix", "tsc --noEmit", "prettier --write"],
 };
 
 export default config;
