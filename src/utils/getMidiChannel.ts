@@ -1,5 +1,5 @@
-import type { MidiMessage } from "midi";
+// import type { MidiMessage } from "midi";
 
-export function getMidiChannel(message: MidiMessage) {
+export function getMidiChannel(message) {
   return message[0] & 0x0f;
 }
