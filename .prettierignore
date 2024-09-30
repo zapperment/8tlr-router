@@ -1,6 +1,5 @@
-.yarn
-.yarn
-.yarn.lock
-.pnp.cjs
-.pnp.loader.mjs
 .vscode
+.editorconfig
+.gitignore
+.husky
+.prettierignore

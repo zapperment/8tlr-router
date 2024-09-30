@@ -1,6 +1,5 @@
 {
   "name": "@zapperment/8tlr-router",
-  "packageManager": "yarn@4.5.0",
   "scripts": {
     "start": "tsx src/index.ts",
     "format": "prettier . --write",
