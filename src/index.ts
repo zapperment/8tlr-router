@@ -20,8 +20,8 @@ const outputs = portName.output.map((outputPortName) =>
   initPort<Output>(outputPortName, "output"),
 );
 
-let selectedOutputIndices = new Array<number>(8).fill(0);
-let shiftChannel = new Array<boolean>(8).fill(false);
+const selectedOutputIndices = new Array<number>(8).fill(0);
+const shiftChannel = new Array<boolean>(8).fill(false);
 debug(JSON.stringify(selectedOutputIndices));
 
 input.on("message", (_, message) => {
