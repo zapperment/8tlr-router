@@ -1,5 +1,1 @@
-
-prettier . --write
-eslint . --fix
-tsc --noEmit
-
+lint-staged
