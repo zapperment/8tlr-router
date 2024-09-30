@@ -1,0 +1,5 @@
+
+prettier . --write
+eslint . --fix
+tsc --noEmit
+
