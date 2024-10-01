@@ -1,4 +1,5 @@
-export const programVersion = "0.0.1";
+export const programVersion = "0.0.1-beta.2";
+
 export const portName = {
   input: "IAC Live to Bome",
   output: [

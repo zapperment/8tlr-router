@@ -1,6 +1,7 @@
 {
   "name": "8tlr-router",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.2",
+  "bin": "src/index.ts",
   "scripts": {
     "start": "tsx src/index.ts",
     "format": "prettier . --write",
