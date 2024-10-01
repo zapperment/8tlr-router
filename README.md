@@ -30,7 +30,7 @@ If you want verbose output, run it with a `DEBUG` environment variable set, like
 so:
 
 ```
-DEBUG=\* 8tlr-router
+DEBUG=* 8tlr-router
 ```
 
 This will log the processing of every incoming MIDI message.
