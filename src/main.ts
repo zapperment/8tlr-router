@@ -1,4 +1,10 @@
-import { getMidiChannel, initPort, isSketchSwitch, reportMidiStatus,createMidiStatusReport } from "./utils";
+import {
+  getMidiChannel,
+  initPort,
+  isSketchSwitch,
+  reportMidiStatus,
+  createMidiStatusReport,
+} from "./utils";
 import createDebug from "debug";
 import { portName } from "./constants";
 import type { Input, Output } from "midi";
@@ -18,7 +24,7 @@ export async function main() {
 
   input.on("message", (_, message) => {
     const inChannel = getMidiChannel(message);
-    if (inChannel>7){
+    if (inChannel > 7) {
       debug(`Invalid data - received MIDI message on channel ${inChannel}`);
       return;
     }
@@ -37,8 +43,8 @@ export async function main() {
       inChannel,
       outChannel,
       outPortName: portName.output[selectedOutputIndices[inChannel]],
-      message
-    })
+      message,
+    });
 
     if (debug.enabled) {
       debug(msg);
