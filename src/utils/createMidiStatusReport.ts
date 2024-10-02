@@ -16,14 +16,16 @@ export function createMidiStatusReport({
   message,
 }: Args) {
   const inChannelStr = chalk.inverse.blue(String(inChannel).padStart(2, " "));
-  const outChannelStr = chalk.inverse.green(String(outChannel).padStart(2, " "));
-  const outPortNameStr = chalk.inverse.magenta(outPortName)
-  const messageStrHex = chalk.inverse.cyan(`${message
-  .map((messagePart) => formatHex(messagePart))
-  .join(
-    " ",
-  )}`);
-  const messageStrDec = chalk.inverse.yellow(`${message.map((messagePart) => String(messagePart).padStart(3, "0")).join(" ")})`);
+  const outChannelStr = chalk.inverse.green(
+    String(outChannel).padStart(2, " "),
+  );
+  const outPortNameStr = chalk.inverse.magenta(outPortName);
+  const messageStrHex = chalk.inverse.cyan(
+    `${message.map((messagePart) => formatHex(messagePart)).join(" ")}`,
+  );
+  const messageStrDec = chalk.inverse.yellow(
+    `${message.map((messagePart) => String(messagePart).padStart(3, " ")).join(" ")}`,
+  );
 
   return `in channel: ${
     inChannelStr
