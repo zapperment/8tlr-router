@@ -1,11 +1,11 @@
-import { formatHex, getMidiChannel, initPort, isSketchSwitch } from "./utils";
+import { getMidiChannel, initPort, isSketchSwitch, reportMidiStatus,createMidiStatusReport } from "./utils";
 import createDebug from "debug";
-import type { Input, Output } from "midi";
 import { portName } from "./constants";
+import type { Input, Output } from "midi";
 
 const debug = createDebug("8tlr-router:main");
 
-export function main() {
+export async function main() {
   const input = initPort<Input>(portName.input, "input");
 
   const outputs = portName.output.map((outputPortName) =>
@@ -17,19 +17,35 @@ export function main() {
   debug(JSON.stringify(selectedOutputIndices));
 
   input.on("message", (_, message) => {
-    const channel = getMidiChannel(message);
+    const inChannel = getMidiChannel(message);
+    if (inChannel>7){
+      debug(`Invalid data - received MIDI message on channel ${inChannel}`);
+      return;
+    }
     if (isSketchSwitch(message)) {
-      selectedOutputIndices[channel] = Math.floor(message[2] / 2);
-      shiftChannel[channel] = message[2] % 2 !== 0;
+      selectedOutputIndices[inChannel] = Math.floor(message[2] / 2);
+      shiftChannel[inChannel] = message[2] % 2 !== 0;
       debug(`out=${selectedOutputIndices} / shift=${shiftChannel}`);
       return;
     }
-    if (shiftChannel[channel]) {
+    let outChannel = inChannel;
+    if (shiftChannel[inChannel]) {
       message[0] += 8;
+      outChannel += 8;
     }
-    debug(
-      `ch=${channel} - out=${selectedOutputIndices[channel]} - shift=${shiftChannel[channel]} - ${message.map((messagePart) => formatHex(messagePart)).join(" - ")}`,
-    );
-    outputs[selectedOutputIndices[channel]].sendMessage(message);
+    const msg = createMidiStatusReport({
+      inChannel,
+      outChannel,
+      outPortName: portName.output[selectedOutputIndices[inChannel]],
+      message
+    })
+
+    if (debug.enabled) {
+      debug(msg);
+    } else {
+      reportMidiStatus(msg);
+    }
+
+    outputs[selectedOutputIndices[inChannel]].sendMessage(message);
   });
 }
