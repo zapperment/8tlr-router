@@ -1,7 +1,9 @@
-export { getPortIndex } from "./getPortIndex";
-export { withFatalErrorOnNull } from "./withFatalErrorOnNull";
+export { createMidiStatusReport } from "./createMidiStatusReport";
 export { formatHex } from "./formatHex";
+export { getMidiChannel } from "./getMidiChannel";
+export { getPortIndex } from "./getPortIndex";
 export { initPort } from "./initPort";
 export { isControlChange } from "./isControlChange";
 export { isSketchSwitch } from "./isSketchSwitch";
-export { getMidiChannel } from "./getMidiChannel";
+export { reportMidiStatus } from "./reportMidiStatus";
+export { withFatalErrorOnNull } from "./withFatalErrorOnNull";
