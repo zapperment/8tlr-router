@@ -16,10 +16,10 @@ export function createMidiStatusReport({
   midiMessage,
 }: Args) {
   const inputChannelStr = chalk.inverse.blue(
-    String(inputChannel).padStart(2, " "),
+    String(inputChannel + 1).padStart(2, " "),
   );
   const outputChannelStr = chalk.inverse.green(
-    String(outputChannel).padStart(2, " "),
+    String(outputChannel + 1).padStart(2, " "),
   );
   const outputPortNameStr = chalk.inverse.magenta(outputPortName);
   const messageStrHex = chalk.inverse.cyan(
