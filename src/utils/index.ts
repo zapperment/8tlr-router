@@ -1,4 +1,5 @@
 export { createMidiStatusReport } from "./createMidiStatusReport";
+export { createMidiMessageRouter } from "./createMidiMessageRouter";
 export { formatHex } from "./formatHex";
 export { getMidiChannel } from "./getMidiChannel";
 export { getPortIndex } from "./getPortIndex";

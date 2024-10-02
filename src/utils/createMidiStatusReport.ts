@@ -3,33 +3,35 @@ import { formatHex } from "./formatHex";
 import chalk from "chalk";
 
 interface Args {
-  inChannel: number;
-  outChannel: number;
-  outPortName: string;
-  message: MidiMessage;
+  inputChannel: number;
+  outputChannel: number;
+  outputPortName: string;
+  midiMessage: MidiMessage;
 }
 
 export function createMidiStatusReport({
-  inChannel,
-  outChannel,
-  outPortName,
-  message,
+  inputChannel,
+  outputChannel,
+  outputPortName,
+  midiMessage,
 }: Args) {
-  const inChannelStr = chalk.inverse.blue(String(inChannel).padStart(2, " "));
-  const outChannelStr = chalk.inverse.green(
-    String(outChannel).padStart(2, " "),
+  const inputChannelStr = chalk.inverse.blue(
+    String(inputChannel).padStart(2, " "),
   );
-  const outPortNameStr = chalk.inverse.magenta(outPortName);
+  const outputChannelStr = chalk.inverse.green(
+    String(outputChannel).padStart(2, " "),
+  );
+  const outputPortNameStr = chalk.inverse.magenta(outputPortName);
   const messageStrHex = chalk.inverse.cyan(
-    `${message.map((messagePart) => formatHex(messagePart)).join(" ")}`,
+    `${midiMessage.map((messagePart) => formatHex(messagePart)).join(" ")}`,
   );
   const messageStrDec = chalk.inverse.yellow(
-    `${message.map((messagePart) => String(messagePart).padStart(3, " ")).join(" ")}`,
+    `${midiMessage.map((messagePart) => String(messagePart).padStart(3, " ")).join(" ")}`,
   );
 
   return `in channel: ${
-    inChannelStr
-  }   out channel: ${outChannelStr}   out port: ${
-    outPortNameStr
+    inputChannelStr
+  }   out channel: ${outputChannelStr}   out port: ${
+    outputPortNameStr
   }   message: ${messageStrHex} ${messageStrDec}`;
 }
