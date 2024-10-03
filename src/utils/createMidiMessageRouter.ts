@@ -3,9 +3,20 @@ import { getMidiChannel } from "./getMidiChannel";
 import createDebug from "debug";
 import { isSketchSwitch } from "./isSketchSwitch";
 
-const debug = createDebug("8tlr-router:utils:routeMidiMessage");
+export interface MidiMessageRouterResult {
+  inputChannel: number;
+  outputPortIndex: number;
+  outputChannel: number;
+}
 
-export function createMidiMessageRouter(outputs: Output[]) {
+export type MidiMessageRouter = (
+  midiMessage: MidiMessage,
+) => MidiMessageRouterResult | null;
+
+// exported for testing only
+export const debug = createDebug("8tlr-router:utils:routeMidiMessage");
+
+export function createMidiMessageRouter(outputs: Output[]): MidiMessageRouter {
   const selectedOutputIndices = new Array<number>(8).fill(0);
   const shiftChannel = new Array<boolean>(8).fill(false);
   debug(JSON.stringify(selectedOutputIndices));
@@ -13,7 +24,9 @@ export function createMidiMessageRouter(outputs: Output[]) {
   return (midiMessage: MidiMessage) => {
     const inputChannel = getMidiChannel(midiMessage);
     if (inputChannel > 7) {
-      debug(`Invalid data - received MIDI message on channel ${inputChannel}`);
+      debug(
+        `Invalid data - received MIDI message on channel ${inputChannel + 1}`,
+      );
       return null;
     }
 
