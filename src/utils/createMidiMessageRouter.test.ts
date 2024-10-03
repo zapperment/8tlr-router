@@ -1,5 +1,6 @@
 import type { MidiMessage, Output } from "midi";
 import { createMidiMessageRouter, debug } from "./createMidiMessageRouter";
+import { sketchSwitchControlChangeNumber } from "../constants";
 
 const outputs: Output[] = new Array(4).fill(null).map(() => ({
   sendMessage: vi.fn(),
@@ -13,8 +14,11 @@ const outputs: Output[] = new Array(4).fill(null).map(() => ({
 
 const NOTE_ON_CH1_C2_V100: MidiMessage = [0x90, 0x30, 0x64];
 const NOTE_ON_CH9_C2_V100: MidiMessage = [0x98, 0x30, 0x64];
+const SKETCH_SWITCH_2: MidiMessage = [0xb0, sketchSwitchControlChangeNumber, 1];
+const SKETCH_SWITCH_3: MidiMessage = [0xb0, sketchSwitchControlChangeNumber, 2];
 
 vi.mock("debug", () => ({ default: () => vi.fn() }));
+let result: MidiMessageRouterResult | null;
 
 describe("The router function created by createMidiMessageRouter", () => {
   let midiMessageRouter: MidiMessageRouter;
@@ -24,7 +28,6 @@ describe("The router function created by createMidiMessageRouter", () => {
 
   describe("when no sketch switch MIDI message has been received previously", () => {
     describe("and it receives a MIDI message", () => {
-      let result: MidiMessageRouterResult | null;
       beforeEach(() => {
         result = midiMessageRouter(NOTE_ON_CH1_C2_V100);
       });
@@ -46,7 +49,6 @@ describe("The router function created by createMidiMessageRouter", () => {
       });
     });
     describe("and it receives a MIDI message on a channel greater than 8", () => {
-      let result: MidiMessageRouterResult | null;
       beforeEach(() => {
         result = midiMessageRouter(NOTE_ON_CH9_C2_V100);
       });
@@ -63,6 +65,75 @@ describe("The router function created by createMidiMessageRouter", () => {
 
       it("returns null", () => {
         expect(result).toBeNull();
+      });
+    });
+  });
+
+  describe("when it receives a sketch switch control change for sketch 2", () => {
+    beforeEach(() => {
+      result = midiMessageRouter(SKETCH_SWITCH_2);
+    });
+    it(`Logs a debug message that indicates that MIDI messages arriving on channel 1
+         will now be routed to channel 9 on the same output port`, () => {
+      expect(debug).toHaveBeenCalledWith(
+        "out=0,0,0,0,0,0,0,0 / shift=true,false,false,false,false,false,false,false",
+      );
+    });
+    it("returns null", () => {
+      expect(result).toBeNull();
+    });
+    describe("and then receives a MIDI message on channel 1", () => {
+      beforeEach(() => {
+        result = midiMessageRouter(NOTE_ON_CH1_C2_V100);
+      });
+      it("routes the MIDI message to channel 9 on output port 1", () => {
+        expect(outputs[0].sendMessage).toHaveBeenCalledWith([
+          NOTE_ON_CH1_C2_V100[0] + 8,
+          NOTE_ON_CH1_C2_V100[1],
+          NOTE_ON_CH1_C2_V100[2],
+        ]);
+      });
+      it("returns the correct result", () => {
+        expect(result).toMatchInlineSnapshot(`
+          {
+            "inputChannel": 0,
+            "outputChannel": 8,
+            "outputPortIndex": 0,
+          }
+        `);
+      });
+    });
+  });
+  describe("when it receives a sketch switch control change for sketch 3", () => {
+    beforeEach(() => {
+      result = midiMessageRouter(SKETCH_SWITCH_3);
+    });
+    it(`Logs a debug message that indicates that MIDI messages arriving on channel 1
+         will now be routed to channel 1 on output port 2`, () => {
+      expect(debug).toHaveBeenCalledWith(
+        "out=1,0,0,0,0,0,0,0 / shift=false,false,false,false,false,false,false,false",
+      );
+    });
+    it("returns null", () => {
+      expect(result).toBeNull();
+    });
+    describe("and then receives a MIDI message on channel 1", () => {
+      beforeEach(() => {
+        result = midiMessageRouter(NOTE_ON_CH1_C2_V100);
+      });
+      it("routes the MIDI message to channel 1 on output port 2", () => {
+        expect(outputs[1].sendMessage).toHaveBeenCalledWith(
+          NOTE_ON_CH1_C2_V100,
+        );
+      });
+      it("returns the correct result", () => {
+        expect(result).toMatchInlineSnapshot(`
+          {
+            "inputChannel": 0,
+            "outputChannel": 0,
+            "outputPortIndex": 1,
+          }
+        `);
       });
     });
   });

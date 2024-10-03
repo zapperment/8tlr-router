@@ -9,3 +9,5 @@ export const portName = {
     "IAC Bome to Reason 4",
   ],
 };
+
+export const sketchSwitchControlChangeNumber = 119;
