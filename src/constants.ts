@@ -1,4 +1,4 @@
-export const programVersion = "0.0.3";
+export const programVersion = "0.0.4";
 
 export const portName = {
   input: "IAC Live to Bome",
@@ -9,3 +9,5 @@ export const portName = {
     "IAC Bome to Reason 4",
   ],
 };
+
+export const sketchSwitchControlChangeNumber = 119;
