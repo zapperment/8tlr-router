@@ -7,7 +7,9 @@ _Routes MIDI messages from Ableton Live to Reason_
 You should have an up-to-date version of [Node.js](https://nodejs.org/)
 installed. Then you can install _8tlr-router_ with npm:
 
+```
 npm install -g 8tlr-router@latest
+```
 
 You can confirm the installation worked by checking the version:
 
