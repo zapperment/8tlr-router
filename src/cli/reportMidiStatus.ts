@@ -1,6 +1,7 @@
-import readline from "readline";
+import { resetLine } from "./resetLine";
+import { writeLine } from "./writeLine";
 
 export function reportMidiStatus(message: string) {
-  readline.cursorTo(process.stdout, 0);
-  process.stdout.write(message);
+  resetLine();
+  writeLine(message);
 }

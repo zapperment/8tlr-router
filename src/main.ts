@@ -1,5 +1,9 @@
 import { initPort, createMidiMessageRouter } from "./midi";
-import { reportMidiStatus, createMidiStatusReport } from "./cli";
+import {
+  reportMidiStatus,
+  createMidiStatusReport,
+  showStartupBanner,
+} from "./cli";
 import createDebug from "debug";
 import { portName } from "./constants";
 import type { Input, Output } from "midi";
@@ -14,6 +18,8 @@ export async function main() {
   );
 
   const routeMidiMessage = createMidiMessageRouter(outputs);
+
+  showStartupBanner();
 
   input.on("message", (_, midiMessage) => {
     const routingResult = routeMidiMessage(midiMessage);
