@@ -6,7 +6,11 @@ import { isSketchSwitch } from "./isSketchSwitch";
 // exported for testing only
 export const debug = createDebug("8tlr-router:midi:routeMidiMessage");
 
-export function createMidiMessageRouter(outputs: Output[]): MidiMessageRouter {
+interface Args {
+  outputs: Output[];
+}
+
+export function createMidiMessageRouter({ outputs }: Args): MidiMessageRouter {
   const selectedOutputIndices = new Array<number>(8).fill(0);
   const shiftChannel = new Array<boolean>(8).fill(false);
   debug(JSON.stringify(selectedOutputIndices));
@@ -39,6 +43,7 @@ export function createMidiMessageRouter(outputs: Output[]): MidiMessageRouter {
       inputChannel,
       outputPortIndex,
       outputChannel,
+      outputMidiMessage,
     };
   };
 }

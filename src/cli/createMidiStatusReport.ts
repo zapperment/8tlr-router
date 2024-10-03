@@ -1,5 +1,5 @@
 import type { MidiMessage } from "midi";
-import { formatHex } from "../utils";
+import { formatMidiMessage } from "../utils";
 import chalk from "chalk";
 
 interface Args {
@@ -23,10 +23,10 @@ export function createMidiStatusReport({
   );
   const outputPortNameStr = chalk.inverse.magenta(outputPortName);
   const messageStrHex = chalk.inverse.cyan(
-    `${midiMessage.map((messagePart) => formatHex(messagePart)).join(" ")}`,
+    formatMidiMessage(midiMessage, true),
   );
   const messageStrDec = chalk.inverse.yellow(
-    `${midiMessage.map((messagePart) => String(messagePart).padStart(3, " ")).join(" ")}`,
+    formatMidiMessage(midiMessage, false),
   );
 
   return `in channel: ${
