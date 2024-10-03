@@ -1,5 +1,5 @@
 import type { MidiMessage } from "midi";
-import { formatHex } from "./formatHex";
+import { formatHex } from "../utils";
 import chalk from "chalk";
 
 interface Args {

@@ -18,10 +18,11 @@ const SKETCH_SWITCH_2: MidiMessage = [0xb0, sketchSwitchControlChangeNumber, 1];
 const SKETCH_SWITCH_3: MidiMessage = [0xb0, sketchSwitchControlChangeNumber, 2];
 
 vi.mock("debug", () => ({ default: () => vi.fn() }));
+
 let result: MidiMessageRouterResult | null;
+let midiMessageRouter: MidiMessageRouter;
 
 describe("The router function created by createMidiMessageRouter", () => {
-  let midiMessageRouter: MidiMessageRouter;
   beforeEach(() => {
     midiMessageRouter = createMidiMessageRouter(outputs);
   });
@@ -48,6 +49,7 @@ describe("The router function created by createMidiMessageRouter", () => {
         `);
       });
     });
+
     describe("and it receives a MIDI message on a channel greater than 8", () => {
       beforeEach(() => {
         result = midiMessageRouter(NOTE_ON_CH9_C2_V100);
@@ -104,6 +106,7 @@ describe("The router function created by createMidiMessageRouter", () => {
       });
     });
   });
+
   describe("when it receives a sketch switch control change for sketch 3", () => {
     beforeEach(() => {
       result = midiMessageRouter(SKETCH_SWITCH_3);

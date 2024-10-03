@@ -1,9 +1,5 @@
-import {
-  initPort,
-  reportMidiStatus,
-  createMidiStatusReport,
-  createMidiMessageRouter,
-} from "./utils";
+import { initPort, createMidiMessageRouter } from "./midi";
+import { reportMidiStatus, createMidiStatusReport } from "./cli";
 import createDebug from "debug";
 import { portName } from "./constants";
 import type { Input, Output } from "midi";
@@ -38,7 +34,5 @@ export async function main() {
     } else {
       reportMidiStatus(msg);
     }
-
-    outputs[outputPortIndex].sendMessage(midiMessage);
   });
 }

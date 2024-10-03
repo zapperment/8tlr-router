@@ -1,6 +1,6 @@
 import midi from "midi";
 import type { Input, Output } from "midi";
-import { withFatalErrorOnNull } from "./withFatalErrorOnNull";
+import { withFatalErrorOnNull } from "../utils";
 import { getPortIndex } from "./getPortIndex";
 
 export function initPort<T extends Input | Output>(

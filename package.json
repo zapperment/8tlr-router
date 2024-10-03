@@ -14,6 +14,7 @@
     "@eslint/js": "^9.11.1",
     "@types/debug": "^4",
     "@types/midi": "^2",
+    "@vitest/coverage-v8": "^2.1.2",
     "eslint": "^9.11.1",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
