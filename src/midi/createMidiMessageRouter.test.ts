@@ -24,7 +24,7 @@ let midiMessageRouter: MidiMessageRouter;
 
 describe("The router function created by createMidiMessageRouter", () => {
   beforeEach(() => {
-    midiMessageRouter = createMidiMessageRouter(outputs);
+    midiMessageRouter = createMidiMessageRouter({ outputs });
   });
 
   describe("when no sketch switch MIDI message has been received previously", () => {
@@ -44,6 +44,11 @@ describe("The router function created by createMidiMessageRouter", () => {
           {
             "inputChannel": 0,
             "outputChannel": 0,
+            "outputMidiMessage": [
+              144,
+              48,
+              100,
+            ],
             "outputPortIndex": 0,
           }
         `);
@@ -100,6 +105,11 @@ describe("The router function created by createMidiMessageRouter", () => {
           {
             "inputChannel": 0,
             "outputChannel": 8,
+            "outputMidiMessage": [
+              152,
+              48,
+              100,
+            ],
             "outputPortIndex": 0,
           }
         `);
@@ -134,6 +144,11 @@ describe("The router function created by createMidiMessageRouter", () => {
           {
             "inputChannel": 0,
             "outputChannel": 0,
+            "outputMidiMessage": [
+              144,
+              48,
+              100,
+            ],
             "outputPortIndex": 1,
           }
         `);
