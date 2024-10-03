@@ -1,14 +1,13 @@
-import { initPort, createMidiMessageRouter } from "./midi";
 import {
-  reportMidiStatus,
-  createMidiStatusReport,
-  showStartupBanner,
-} from "./cli";
-import createDebug from "debug";
+  initPort,
+  createMidiMessageRouter,
+  createMidiMessageHandler,
+  createExitHandler,
+} from "./midi";
+import { showStartupBanner } from "./cli";
 import { portName } from "./constants";
 import type { Input, Output } from "midi";
-
-const debug = createDebug("8tlr-router:main");
+import process from "node:process";
 
 export async function main() {
   const input = initPort<Input>(portName.input, "input");
@@ -17,28 +16,12 @@ export async function main() {
     initPort<Output>(outputPortName, "output"),
   );
 
-  const routeMidiMessage = createMidiMessageRouter(outputs);
-
   showStartupBanner();
 
-  input.on("message", (_, midiMessage) => {
-    const routingResult = routeMidiMessage(midiMessage);
-    if (routingResult === null) {
-      return;
-    }
-    const { inputChannel, outputPortIndex, outputChannel } = routingResult;
+  const midiMessageRouter = createMidiMessageRouter(outputs);
+  const midiMessageHandler = createMidiMessageHandler({ midiMessageRouter });
+  input.on("message", midiMessageHandler);
 
-    const msg = createMidiStatusReport({
-      inputChannel,
-      outputChannel,
-      outputPortName: portName.output[outputPortIndex],
-      midiMessage,
-    });
-
-    if (debug.enabled) {
-      debug(msg);
-    } else {
-      reportMidiStatus(msg);
-    }
-  });
+  const exitHandler = createExitHandler({ input, outputs });
+  process.on("exit", exitHandler);
 }

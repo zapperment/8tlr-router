@@ -4,7 +4,7 @@ import createDebug from "debug";
 import { isSketchSwitch } from "./isSketchSwitch";
 
 // exported for testing only
-export const debug = createDebug("8tlr-router:utils:routeMidiMessage");
+export const debug = createDebug("8tlr-router:midi:routeMidiMessage");
 
 export function createMidiMessageRouter(outputs: Output[]): MidiMessageRouter {
   const selectedOutputIndices = new Array<number>(8).fill(0);
