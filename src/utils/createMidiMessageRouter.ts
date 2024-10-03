@@ -3,16 +3,6 @@ import { getMidiChannel } from "./getMidiChannel";
 import createDebug from "debug";
 import { isSketchSwitch } from "./isSketchSwitch";
 
-export interface MidiMessageRouterResult {
-  inputChannel: number;
-  outputPortIndex: number;
-  outputChannel: number;
-}
-
-export type MidiMessageRouter = (
-  midiMessage: MidiMessage,
-) => MidiMessageRouterResult | null;
-
 // exported for testing only
 export const debug = createDebug("8tlr-router:utils:routeMidiMessage");
 

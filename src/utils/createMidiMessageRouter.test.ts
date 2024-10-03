@@ -1,9 +1,5 @@
 import type { MidiMessage, Output } from "midi";
 import { createMidiMessageRouter, debug } from "./createMidiMessageRouter";
-import type {
-  MidiMessageRouter,
-  MidiMessageRouterResult,
-} from "./createMidiMessageRouter";
 
 const outputs: Output[] = new Array(4).fill(null).map(() => ({
   sendMessage: vi.fn(),
