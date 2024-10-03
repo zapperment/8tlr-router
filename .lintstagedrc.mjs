@@ -4,7 +4,7 @@ const config = {
     "eslint --fix",
     () => "tsc --noEmit --project tsconfig.json",
     "prettier --write",
-    "vitest run related",
+    "vitest run related --passWithNoTests",
   ],
 };
 
