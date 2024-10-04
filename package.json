@@ -1,6 +1,6 @@
 {
   "name": "8tlr-router",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "bin": "src/index.ts",
   "scripts": {
     "start": "tsx src/index.ts",
