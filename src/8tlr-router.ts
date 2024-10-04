@@ -4,10 +4,10 @@ import { main } from "./main";
 
 const debug = createDebug("8tlr-router");
 
-program.option("-V, --version", "show program version");
-program.option("-o, --off", "send all notes off");
-
-program.parse(process.argv);
+program
+  .option("-V, --version", "show program version")
+  .option("-o, --off", "send all notes off")
+  .parse(process.argv);
 
 const options = program.opts();
 

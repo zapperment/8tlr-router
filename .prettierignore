@@ -1,3 +1,4 @@
 .gitignore
 .prettierignore
 .husky
+*.png
