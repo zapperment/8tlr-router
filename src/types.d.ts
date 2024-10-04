@@ -15,3 +15,12 @@ interface ProgramOptions {
   version?: boolean;
   off?: boolean;
 }
+
+interface ConfigPortName {
+  input: string;
+  output: [string, string, string, string];
+}
+
+interface Config {
+  portName: ConfigPortName;
+}

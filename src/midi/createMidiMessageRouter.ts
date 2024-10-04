@@ -13,7 +13,6 @@ interface Args {
 export function createMidiMessageRouter({ outputs }: Args): MidiMessageRouter {
   const selectedOutputIndices = new Array<number>(8).fill(0);
   const shiftChannel = new Array<boolean>(8).fill(false);
-  debug(JSON.stringify(selectedOutputIndices));
 
   return (inputMidiMessage: MidiMessage) => {
     const outputMidiMessage: MidiMessage = [...inputMidiMessage];
@@ -28,7 +27,9 @@ export function createMidiMessageRouter({ outputs }: Args): MidiMessageRouter {
     if (isSketchSwitch(inputMidiMessage)) {
       selectedOutputIndices[inputChannel] = Math.floor(inputMidiMessage[2] / 2);
       shiftChannel[inputChannel] = inputMidiMessage[2] % 2 !== 0;
-      debug(`out=${selectedOutputIndices} / shift=${shiftChannel}`);
+      debug(
+        `Sketch switch ${inputMidiMessage[2]}: out=${selectedOutputIndices} / shift=${shiftChannel}`,
+      );
       return null;
     }
     let outputChannel = inputChannel;
@@ -37,6 +38,7 @@ export function createMidiMessageRouter({ outputs }: Args): MidiMessageRouter {
       outputChannel += 8;
     }
     const outputPortIndex = selectedOutputIndices[inputChannel];
+    debug(`Output port index: ${outputPortIndex}`);
     outputs[outputPortIndex].sendMessage(outputMidiMessage);
 
     return {
