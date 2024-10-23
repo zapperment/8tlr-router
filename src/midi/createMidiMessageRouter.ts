@@ -28,7 +28,7 @@ export function createMidiMessageRouter({ outputs }: Args): MidiMessageRouter {
       selectedOutputIndices[inputChannel] = Math.floor(inputMidiMessage[2] / 2);
       shiftChannel[inputChannel] = inputMidiMessage[2] % 2 !== 0;
       debug(
-        `Sketch switch ${inputMidiMessage[2]}: out=${selectedOutputIndices} / shift=${shiftChannel}`,
+        `Sketch switch ${inputMidiMessage[2] + 1}: out=${selectedOutputIndices} / shift=${shiftChannel}`,
       );
       return null;
     }
